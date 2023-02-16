@@ -36,16 +36,26 @@ Put `email.py` somewhere sensible.  Then create yourself a `oauth.py` following
 the model in `oauth_example.py`.
 
 ## Initial Setup
-Make sure your `.pass` exists and has the right permissions.  Run `python
-oauth.py USER@ACCOUNT --refresh` for every account defined in `oauth.py`.  This
+Make sure your `.pass` folder exists and has the right permissions. The scripts 
+will write some information inside, in a file (such as `~/.pass/Microsoft`). You
+don't need to create or fill such a file beforehand.
+
+Run 
+
+```
+python oauth.py USER@ACCOUNT --refresh
+```
+for every account defined in `oauth.py`.  This
 will fire up a web browser (run with `BROWSER=/path/to/browser` to change) and
 direct you to your usual company login portal, after which it will extract the
-refresh token and save it to disk.
+refresh token and save it to disk. 
 
 You can pass all the accounts in at once, in which case they will be processed
-sequentially.  Warning!  If your browser keeps you logged in---which it probably
-will---and you have multiple accounts from the same provider, this may not do
+sequentially.  Warning!  If your browser keeps you logged in — which it probably
+will — and you have multiple accounts from the same provider, this may not do
 what you think.
+
+Note about Office365: the `redirect_uri` may need to use port `8080` instead of `5671` (line 128 of `email_auth.py`).
 
 ## Offlineimap (or library usage)
 
@@ -60,6 +70,8 @@ oauth2_access_token_eval = Gmail1.authentication_token()
 ```
 
 and so on.
+
+You may need to add `oauth2_request_url = https://login.microsoftonline.com/common/oauth2/v2.0/token`, and/or to copy/paste the token from your file after `oauth2_refresh_token=`, instead of using `oauth2_access_token_eval`.
 
 ## Emacs (or cli usage)
 
